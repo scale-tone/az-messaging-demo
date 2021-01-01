@@ -4,7 +4,7 @@
     "parameters": {
         "deploymentName": {
             "type": "string",
-            "defaultValue": "[concat('azmsgdemo1', uniqueString(resourceGroup().id))]",
+            "defaultValue": "[concat('azmsg1', uniqueString(resourceGroup().id))]",
             "metadata": {
                 "description": "A unique random base name for this demo setup"
             }
@@ -13,7 +13,7 @@
     "variables": {
         "eventHubNamespaceName": "[concat(parameters('deploymentName'), '-eh-ns')]",
         "serviceBusNamespaceName": "[concat(parameters('deploymentName'), '-sb-ns')]",
-        "storageAccountName": "[concat(parameters('deploymentName'), 'storage')]",
+        "storageAccountName": "[concat(parameters('deploymentName'), 'st')]",
         "hostingPlanName": "[concat(parameters('deploymentName'), '-plan')]",
         "functionAppName": "[concat(parameters('deploymentName'), '-function')]",
         "appInsightsName": "[concat(parameters('deploymentName'), '-insights')]"
