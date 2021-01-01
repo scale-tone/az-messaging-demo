@@ -11,12 +11,12 @@
         }
     },
     "variables": {
-        "eventHubNamespaceName": "[concat(parameters('deploymentName'), '-eh-ns']",
-        "serviceBusNamespaceName": "[concat(parameters('deploymentName'), '-sb-ns']",
-        "storageAccountName": "[concat(parameters('deploymentName'), 'storage']",
-        "hostingPlanName": "[concat(parameters('deploymentName'), '-plan']",
-        "functionAppName": "[concat(parameters('deploymentName'), '-function']",
-        "appInsightsName": "[concat(parameters('deploymentName'), '-insights']"
+        "eventHubNamespaceName": "[concat(parameters('deploymentName'), '-eh-ns')]",
+        "serviceBusNamespaceName": "[concat(parameters('deploymentName'), '-sb-ns')]",
+        "storageAccountName": "[concat(parameters('deploymentName'), 'storage')]",
+        "hostingPlanName": "[concat(parameters('deploymentName'), '-plan')]",
+        "functionAppName": "[concat(parameters('deploymentName'), '-function')]",
+        "appInsightsName": "[concat(parameters('deploymentName'), '-insights')]"
     },
     "resources": [
         {
