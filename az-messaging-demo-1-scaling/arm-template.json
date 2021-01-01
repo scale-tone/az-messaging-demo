@@ -88,7 +88,8 @@
                         "[resourceId('Microsoft.ServiceBus/namespaces', variables('serviceBusNamespaceName'))]"
                     ],
                     "properties": {
-                        "maxSizeInMegabytes": 1024
+                        "maxSizeInMegabytes": 1024,
+                        "defaultMessageTimeToLive": "P1D" 
                     }
                 }
             ]
