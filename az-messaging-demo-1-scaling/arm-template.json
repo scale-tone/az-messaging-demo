@@ -104,9 +104,13 @@
                 "reserved": true
             },
             "sku": {
-                "Tier": "Basic",
-                "Name": "B1"
-            }
+                "name": "B1",
+                "tier": "Basic",
+                "size": "B1",
+                "family": "B",
+                "capacity": 1
+            },
+            "kind": "app"
         },
         {
             "apiVersion": "2018-11-01",
