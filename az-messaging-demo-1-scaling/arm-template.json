@@ -105,8 +105,8 @@
                 "reserved": true
             },
             "sku": {
-                "Tier": "Basic",
-                "Name": "B1"
+                "Tier": "Standard",
+                "Name": "P2v2"
             }
         },
         {
@@ -139,7 +139,6 @@
             "properties": {
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
                 "siteConfig": {
-                    "linuxFxVersion": "DOCKER|microsoft/azure-functions-node8:2.0",
                     "appSettings": [
                         {
                             "name": "Project",
