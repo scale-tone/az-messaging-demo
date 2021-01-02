@@ -101,7 +101,7 @@
             "location": "[resourceGroup().location]",
             "properties": {
                 "name": "[variables('hostingPlanName')]",
-                "reserved": true
+                "reserved": false
             },
             "sku": {
                 "name": "B1",
