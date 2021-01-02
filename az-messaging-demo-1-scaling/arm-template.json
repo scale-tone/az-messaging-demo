@@ -99,14 +99,13 @@
             "apiVersion": "2016-09-01",
             "name": "[variables('hostingPlanName')]",
             "location": "[resourceGroup().location]",
-            "kind": "linux",
             "properties": {
                 "name": "[variables('hostingPlanName')]",
                 "reserved": true
             },
             "sku": {
-                "Tier": "Standard",
-                "Name": "P2v2"
+                "Tier": "Basic",
+                "Name": "B1"
             }
         },
         {
@@ -114,7 +113,7 @@
             "type": "Microsoft.Web/sites",
             "name": "[variables('functionAppName')]",
             "location": "[resourceGroup().location]",
-            "kind": "functionapp,linux",
+            "kind": "functionapp",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
                 "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
