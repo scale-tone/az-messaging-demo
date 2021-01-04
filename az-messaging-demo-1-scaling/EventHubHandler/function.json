@@ -4,7 +4,7 @@
       "type": "eventHubTrigger",
       "name": "eventHubMessages",
       "direction": "in",
-      "eventHubName": "input",
+      "eventHubName": "input-hub",
       "connection": "EventHubsConnection",
       "cardinality": "many",
       "consumerGroup": "$Default"
