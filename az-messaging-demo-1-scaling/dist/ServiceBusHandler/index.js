@@ -34,25 +34,36 @@ const appInsights = __importStar(require("applicationinsights"));
 const shared_1 = require("../shared");
 // Sending a bunch of events at every Function startup
 function SendSomeEventsAtStartup(numOfEvents) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const client = new service_bus_1.ServiceBusClient(process.env['ServiceBusConnection']);
-        const sender = client.createSender('input');
+    const client = new service_bus_1.ServiceBusClient(process.env['ServiceBusConnection']);
+    const sender = client.createSender('input');
+    sender.createMessageBatch().then(batch => {
+        for (var i = 0; i < 1000; i++) {
+            const body = `${new Date().toJSON()}: event${i}`;
+            batch.tryAddMessage({ body });
+        }
+        sender.sendMessages(batch);
+    });
+    /*
         // Expecting all events to fit into one batch
-        var batch = yield sender.createMessageBatch();
+        var batch = await sender.createMessageBatch();
         for (var i = 0; i < numOfEvents; i++) {
+    
             const body = `${new Date().toJSON()}: event${i}`;
             if (!batch.tryAddMessage({ body })) {
-                yield sender.sendMessages(batch);
-                batch = yield sender.createMessageBatch();
+                
+                await sender.sendMessages(batch);
+    
+                batch = await sender.createMessageBatch();
                 batch.tryAddMessage({ body });
             }
         }
-        yield sender.sendMessages(batch);
-        yield sender.close();
-        yield client.close();
-    });
+        await sender.sendMessages(batch);
+    
+        await sender.close();
+        await client.close();
+    */
 }
-SendSomeEventsAtStartup(shared_1.NumOfEventsToSend).then(() => console.log('>>>>>>>> events sent!'));
+SendSomeEventsAtStartup(shared_1.NumOfEventsToSend);
 // Actual processing function
 function default_1(context, message) {
     return __awaiter(this, void 0, void 0, function* () {
