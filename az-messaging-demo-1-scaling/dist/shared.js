@@ -75,6 +75,6 @@ function SendToEventHub(numOfEvents) {
         yield client.close();
     });
 }
-SendToServiceBus(exports.NumOfEventsToSend);
-SendToEventHub(exports.NumOfEventsToSend);
+// SendToServiceBus(NumOfEventsToSend);
+// SendToEventHub(NumOfEventsToSend);
 //# sourceMappingURL=shared.js.map

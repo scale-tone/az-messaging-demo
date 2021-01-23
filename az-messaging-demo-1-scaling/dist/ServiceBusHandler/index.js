@@ -31,6 +31,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const service_bus_1 = require("@azure/service-bus");
 // AppInsights for sending custom events
 const appInsights = __importStar(require("applicationinsights"));
+const shared_1 = require("../shared");
 // Sending a bunch of events at every Function startup
 function SendSomeEventsAtStartup(numOfEvents) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -51,7 +52,7 @@ function SendSomeEventsAtStartup(numOfEvents) {
         yield client.close();
     });
 }
-// SendSomeEventsAtStartup(NumOfEventsToSend);
+SendSomeEventsAtStartup(shared_1.NumOfEventsToSend).then(() => console.log('>>>>>>>> events sent!'));
 // Actual processing function
 function default_1(context, message) {
     return __awaiter(this, void 0, void 0, function* () {

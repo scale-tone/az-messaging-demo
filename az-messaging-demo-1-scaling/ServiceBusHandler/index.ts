@@ -30,7 +30,7 @@ async function SendSomeEventsAtStartup(numOfEvents: number) {
     await sender.close();
     await client.close();
 }
-// SendSomeEventsAtStartup(NumOfEventsToSend);
+SendSomeEventsAtStartup(NumOfEventsToSend).then(() => console.log('>>>>>>>> events sent!'));
 
 // Actual processing function
 export default async function (context: Context, message: any): Promise<void> {

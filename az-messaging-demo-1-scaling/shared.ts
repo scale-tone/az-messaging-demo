@@ -57,5 +57,5 @@ async function SendToEventHub(numOfEvents: number) {
     await client.close();
 }
 
-SendToServiceBus(NumOfEventsToSend);
-SendToEventHub(NumOfEventsToSend);
+// SendToServiceBus(NumOfEventsToSend);
+// SendToEventHub(NumOfEventsToSend);
