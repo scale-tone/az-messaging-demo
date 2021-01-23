@@ -6,21 +6,7 @@ import * as appInsights from 'applicationinsights';
 
 import { NumOfEventsToSend } from '../shared';
 
-export default async function (context: Context, eventHubMessages: any[]): Promise<void> {
-
-    for (var message of eventHubMessages) {
-
-        // emulating a 100 ms processing delay
-        await new Promise(resolve => setTimeout(resolve, 100));
-
-        context.log(`EventHubHandler got ${message}`);
-        appInsights.defaultClient.trackMetric({ name: 'EventHubEventProcessed', value: 1 });
-    }
-};
-
 // Sending a bunch of events at every Function startup
-SendSomeEventsAtStartup(NumOfEventsToSend);
-
 async function SendSomeEventsAtStartup(numOfEvents: number) {
 
     const client = new EventHubProducerClient(process.env['EventHubsConnection'], 'input');
@@ -41,3 +27,17 @@ async function SendSomeEventsAtStartup(numOfEvents: number) {
 
     await client.close();
 }
+SendSomeEventsAtStartup(NumOfEventsToSend);
+
+// Actual processing function
+export default async function (context: Context, eventHubMessages: any[]): Promise<void> {
+
+    for (var message of eventHubMessages) {
+
+        // emulating a 100 ms processing delay
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        context.log(`EventHubHandler got ${message}`);
+        appInsights.defaultClient.trackMetric({ name: 'EventHubEventProcessed', value: 1 });
+    }
+};

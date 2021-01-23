@@ -32,20 +32,7 @@ const event_hubs_1 = require("@azure/event-hubs");
 // AppInsights for sending custom events
 const appInsights = __importStar(require("applicationinsights"));
 const shared_1 = require("../shared");
-function default_1(context, eventHubMessages) {
-    return __awaiter(this, void 0, void 0, function* () {
-        for (var message of eventHubMessages) {
-            // emulating a 100 ms processing delay
-            yield new Promise(resolve => setTimeout(resolve, 100));
-            context.log(`EventHubHandler got ${message}`);
-            appInsights.defaultClient.trackMetric({ name: 'EventHubEventProcessed', value: 1 });
-        }
-    });
-}
-exports.default = default_1;
-;
 // Sending a bunch of events at every Function startup
-SendSomeEventsAtStartup(shared_1.NumOfEventsToSend);
 function SendSomeEventsAtStartup(numOfEvents) {
     return __awaiter(this, void 0, void 0, function* () {
         const client = new event_hubs_1.EventHubProducerClient(process.env['EventHubsConnection'], 'input');
@@ -62,4 +49,18 @@ function SendSomeEventsAtStartup(numOfEvents) {
         yield client.close();
     });
 }
+SendSomeEventsAtStartup(shared_1.NumOfEventsToSend);
+// Actual processing function
+function default_1(context, eventHubMessages) {
+    return __awaiter(this, void 0, void 0, function* () {
+        for (var message of eventHubMessages) {
+            // emulating a 100 ms processing delay
+            yield new Promise(resolve => setTimeout(resolve, 100));
+            context.log(`EventHubHandler got ${message}`);
+            appInsights.defaultClient.trackMetric({ name: 'EventHubEventProcessed', value: 1 });
+        }
+    });
+}
+exports.default = default_1;
+;
 //# sourceMappingURL=index.js.map
