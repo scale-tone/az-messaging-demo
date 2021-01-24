@@ -11,11 +11,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const service_bus_1 = require("@azure/service-bus");
 const event_hubs_1 = require("@azure/event-hubs");
-const shared_1 = require("../shared");
 function SendToServiceBus(numOfEvents) {
     return __awaiter(this, void 0, void 0, function* () {
         const client = new service_bus_1.ServiceBusClient(process.env['ServiceBusConnection']);
-        const sender = client.createSender('input');
+        const sender = client.createSender('input-queue');
         // Expecting all events to fit into one batch
         var batch = yield sender.createMessageBatch();
         for (var i = 0; i < numOfEvents; i++) {
@@ -33,7 +32,7 @@ function SendToServiceBus(numOfEvents) {
 }
 function SendToEventHub(numOfEvents) {
     return __awaiter(this, void 0, void 0, function* () {
-        const client = new event_hubs_1.EventHubProducerClient(process.env['EventHubsConnection'], 'input');
+        const client = new event_hubs_1.EventHubProducerClient(process.env['EventHubsConnection'], 'input-hub');
         var batch = yield client.createBatch();
         for (var i = 0; i < numOfEvents; i++) {
             const body = `${new Date().toJSON()}: event${i}`;
@@ -50,7 +49,7 @@ function SendToEventHub(numOfEvents) {
 // This will be executed on Function app's startup
 function default_1(context, warmupContext) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield Promise.all([SendToServiceBus(shared_1.NumOfEventsToSend), SendToEventHub(shared_1.NumOfEventsToSend)]);
+        //    await Promise.all([SendToServiceBus(NumOfEventsToSend), SendToEventHub(NumOfEventsToSend)]);
     });
 }
 exports.default = default_1;

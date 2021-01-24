@@ -31,38 +31,28 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const service_bus_1 = require("@azure/service-bus");
 // AppInsights for sending custom events
 const appInsights = __importStar(require("applicationinsights"));
+const shared_1 = require("../shared");
 // Sending a bunch of events at every Function startup
 function SendSomeEventsAtStartup(numOfEvents) {
-    const client = new service_bus_1.ServiceBusClient(process.env['ServiceBusConnection']);
-    const sender = client.createSender('input');
-    sender.createMessageBatch().then(batch => {
-        for (var i = 0; i < 1000; i++) {
-            const body = `${new Date().toJSON()}: event${i}`;
-            batch.tryAddMessage({ body });
-        }
-        sender.sendMessages(batch);
-    });
-    /*
+    return __awaiter(this, void 0, void 0, function* () {
+        const client = new service_bus_1.ServiceBusClient(process.env['ServiceBusConnection']);
+        const sender = client.createSender('input-queue');
         // Expecting all events to fit into one batch
-        var batch = await sender.createMessageBatch();
+        var batch = yield sender.createMessageBatch();
         for (var i = 0; i < numOfEvents; i++) {
-    
             const body = `${new Date().toJSON()}: event${i}`;
             if (!batch.tryAddMessage({ body })) {
-                
-                await sender.sendMessages(batch);
-    
-                batch = await sender.createMessageBatch();
+                yield sender.sendMessages(batch);
+                batch = yield sender.createMessageBatch();
                 batch.tryAddMessage({ body });
             }
         }
-        await sender.sendMessages(batch);
-    
-        await sender.close();
-        await client.close();
-    */
+        yield sender.sendMessages(batch);
+        yield sender.close();
+        yield client.close();
+    });
 }
-// SendSomeEventsAtStartup(NumOfEventsToSend);
+SendSomeEventsAtStartup(shared_1.NumOfEventsToSend);
 // Actual processing function
 function default_1(context, message) {
     return __awaiter(this, void 0, void 0, function* () {

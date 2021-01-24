@@ -31,10 +31,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const event_hubs_1 = require("@azure/event-hubs");
 // AppInsights for sending custom events
 const appInsights = __importStar(require("applicationinsights"));
+const shared_1 = require("../shared");
 // Sending a bunch of events at every Function startup
 function SendSomeEventsAtStartup(numOfEvents) {
     return __awaiter(this, void 0, void 0, function* () {
-        const client = new event_hubs_1.EventHubProducerClient(process.env['EventHubsConnection'], 'input');
+        const client = new event_hubs_1.EventHubProducerClient(process.env['EventHubsConnection'], 'input-hub');
         var batch = yield client.createBatch();
         for (var i = 0; i < numOfEvents; i++) {
             const body = `${new Date().toJSON()}: event${i}`;
@@ -48,7 +49,7 @@ function SendSomeEventsAtStartup(numOfEvents) {
         yield client.close();
     });
 }
-// SendSomeEventsAtStartup(NumOfEventsToSend).then(() => console.log('>>>>>>>> events sent!'));
+SendSomeEventsAtStartup(shared_1.NumOfEventsToSend);
 // Actual processing function
 function default_1(context, eventHubMessages) {
     return __awaiter(this, void 0, void 0, function* () {

@@ -9,7 +9,7 @@ import { NumOfEventsToSend } from '../shared';
 // Sending a bunch of events at every Function startup
 async function SendSomeEventsAtStartup(numOfEvents: number) {
 
-    const client = new EventHubProducerClient(process.env['EventHubsConnection'], 'input');
+    const client = new EventHubProducerClient(process.env['EventHubsConnection'], 'input-hub');
 
     var batch = await client.createBatch();
     for (var i = 0; i < numOfEvents; i++) {
@@ -27,7 +27,7 @@ async function SendSomeEventsAtStartup(numOfEvents: number) {
 
     await client.close();
 }
-// SendSomeEventsAtStartup(NumOfEventsToSend).then(() => console.log('>>>>>>>> events sent!'));
+SendSomeEventsAtStartup(NumOfEventsToSend);
 
 // Actual processing function
 export default async function (context: Context, eventHubMessages: any[]): Promise<void> {

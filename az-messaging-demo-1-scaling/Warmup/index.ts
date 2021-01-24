@@ -7,7 +7,7 @@ import { NumOfEventsToSend } from '../shared';
 async function SendToServiceBus(numOfEvents: number) {
 
     const client = new ServiceBusClient(process.env['ServiceBusConnection']);
-    const sender = client.createSender('input');
+    const sender = client.createSender('input-queue');
 
     // Expecting all events to fit into one batch
     var batch = await sender.createMessageBatch();
@@ -30,7 +30,7 @@ async function SendToServiceBus(numOfEvents: number) {
 
 async function SendToEventHub(numOfEvents: number) {
 
-    const client = new EventHubProducerClient(process.env['EventHubsConnection'], 'input');
+    const client = new EventHubProducerClient(process.env['EventHubsConnection'], 'input-hub');
 
     var batch = await client.createBatch();
     for (var i = 0; i < numOfEvents; i++) {
@@ -52,5 +52,5 @@ async function SendToEventHub(numOfEvents: number) {
 // This will be executed on Function app's startup
 export default async function (context: Context, warmupContext: any): Promise<void> {
 
-    await Promise.all([SendToServiceBus(NumOfEventsToSend), SendToEventHub(NumOfEventsToSend)]);
+//    await Promise.all([SendToServiceBus(NumOfEventsToSend), SendToEventHub(NumOfEventsToSend)]);
 };

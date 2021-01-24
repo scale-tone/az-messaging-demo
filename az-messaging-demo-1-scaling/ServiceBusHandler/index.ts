@@ -7,22 +7,11 @@ import * as appInsights from 'applicationinsights';
 import { NumOfEventsToSend } from '../shared';
 
 // Sending a bunch of events at every Function startup
-function SendSomeEventsAtStartup(numOfEvents: number) {
+async function SendSomeEventsAtStartup(numOfEvents: number) {
 
     const client = new ServiceBusClient(process.env['ServiceBusConnection']);
-    const sender = client.createSender('input');
+    const sender = client.createSender('input-queue');
 
-    sender.createMessageBatch().then(batch => {
-
-        for (var i = 0; i < 1000; i++) {
-            const body = `${new Date().toJSON()}: event${i}`;
-            batch.tryAddMessage({ body });
-        }
-
-        sender.sendMessages(batch);
-    });
-
-/*    
     // Expecting all events to fit into one batch
     var batch = await sender.createMessageBatch();
     for (var i = 0; i < numOfEvents; i++) {
@@ -40,9 +29,8 @@ function SendSomeEventsAtStartup(numOfEvents: number) {
 
     await sender.close();
     await client.close();
-*/
 }
-// SendSomeEventsAtStartup(NumOfEventsToSend);
+SendSomeEventsAtStartup(NumOfEventsToSend);
 
 // Actual processing function
 export default async function (context: Context, message: any): Promise<void> {
