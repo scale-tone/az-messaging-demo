@@ -27,7 +27,7 @@ async function SendSomeEventsAtStartup(numOfEvents: number) {
 
     await client.close();
 }
-SendSomeEventsAtStartup(NumOfEventsToSend).then(() => console.log('>>>>>>>> events sent!'));
+// SendSomeEventsAtStartup(NumOfEventsToSend).then(() => console.log('>>>>>>>> events sent!'));
 
 // Actual processing function
 export default async function (context: Context, eventHubMessages: any[]): Promise<void> {

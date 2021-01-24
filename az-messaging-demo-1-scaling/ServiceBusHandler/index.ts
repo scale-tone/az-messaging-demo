@@ -42,7 +42,7 @@ function SendSomeEventsAtStartup(numOfEvents: number) {
     await client.close();
 */
 }
-SendSomeEventsAtStartup(NumOfEventsToSend);
+// SendSomeEventsAtStartup(NumOfEventsToSend);
 
 // Actual processing function
 export default async function (context: Context, message: any): Promise<void> {

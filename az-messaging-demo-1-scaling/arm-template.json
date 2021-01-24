@@ -94,24 +94,21 @@
                 }
             ]
         },
+
         {
             "type": "Microsoft.Web/serverfarms",
             "apiVersion": "2016-09-01",
             "name": "[variables('hostingPlanName')]",
             "location": "[resourceGroup().location]",
-            "properties": {
-                "name": "[variables('hostingPlanName')]",
-                "reserved": false
-            },
             "sku": {
-                "name": "B1",
-                "tier": "Basic",
-                "size": "B1",
-                "family": "B",
-                "capacity": 1
+                "Tier": "ElasticPremium",
+                "Name": "EP1"
             },
-            "kind": "app"
-        },
+            "properties": {
+                "name": "[variables('hostingPlanName')]"
+            }
+        },        
+
         {
             "apiVersion": "2018-11-01",
             "type": "Microsoft.Web/sites",
