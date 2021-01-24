@@ -6,6 +6,16 @@ import * as appInsights from 'applicationinsights';
 
 import { NumOfEventsToSend } from '../shared';
 
+// Actual processing function
+export default async function (context: Context, message: any): Promise<void> {
+
+    // emulating a 100 ms processing delay
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    context.log(`ServiceBusHandler got ${message}`);
+    appInsights.defaultClient.trackMetric({ name: 'ServiceBusEventProcessed', value: 1 });
+};
+
 // Sending a bunch of events at every Function startup
 async function SendSomeEventsAtStartup(numOfEvents: number) {
 
@@ -18,7 +28,7 @@ async function SendSomeEventsAtStartup(numOfEvents: number) {
 
         const body = `${new Date().toJSON()}: event${i}`;
         if (!batch.tryAddMessage({ body })) {
-            
+
             await sender.sendMessages(batch);
 
             batch = await sender.createMessageBatch();
@@ -31,13 +41,3 @@ async function SendSomeEventsAtStartup(numOfEvents: number) {
     await client.close();
 }
 SendSomeEventsAtStartup(NumOfEventsToSend);
-
-// Actual processing function
-export default async function (context: Context, message: any): Promise<void> {
-
-    // emulating a 100 ms processing delay
-    await new Promise(resolve => setTimeout(resolve, 100));
-
-    context.log(`ServiceBusHandler got ${message}`);
-    appInsights.defaultClient.trackMetric({ name: 'ServiceBusEventProcessed', value: 1 });
-};

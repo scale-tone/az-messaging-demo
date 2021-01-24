@@ -32,6 +32,17 @@ const service_bus_1 = require("@azure/service-bus");
 // AppInsights for sending custom events
 const appInsights = __importStar(require("applicationinsights"));
 const shared_1 = require("../shared");
+// Actual processing function
+function default_1(context, message) {
+    return __awaiter(this, void 0, void 0, function* () {
+        // emulating a 100 ms processing delay
+        yield new Promise(resolve => setTimeout(resolve, 100));
+        context.log(`ServiceBusHandler got ${message}`);
+        appInsights.defaultClient.trackMetric({ name: 'ServiceBusEventProcessed', value: 1 });
+    });
+}
+exports.default = default_1;
+;
 // Sending a bunch of events at every Function startup
 function SendSomeEventsAtStartup(numOfEvents) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -53,15 +64,4 @@ function SendSomeEventsAtStartup(numOfEvents) {
     });
 }
 SendSomeEventsAtStartup(shared_1.NumOfEventsToSend);
-// Actual processing function
-function default_1(context, message) {
-    return __awaiter(this, void 0, void 0, function* () {
-        // emulating a 100 ms processing delay
-        yield new Promise(resolve => setTimeout(resolve, 100));
-        context.log(`ServiceBusHandler got ${message}`);
-        appInsights.defaultClient.trackMetric({ name: 'ServiceBusEventProcessed', value: 1 });
-    });
-}
-exports.default = default_1;
-;
 //# sourceMappingURL=index.js.map
