@@ -26,5 +26,5 @@ appInsights
     .setup(process.env['APPINSIGHTS_INSTRUMENTATIONKEY'])
     .setAutoCollectPerformance(false)
     .start();
-exports.NumOfEventsToSend = 20000;
+exports.NumOfEventsToSend = 50000;
 //# sourceMappingURL=shared.js.map

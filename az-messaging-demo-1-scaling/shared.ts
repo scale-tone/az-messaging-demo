@@ -6,4 +6,4 @@ appInsights
     .setAutoCollectPerformance(false)
     .start();
 
-export const NumOfEventsToSend = 20000;
+export const NumOfEventsToSend = 50000;
