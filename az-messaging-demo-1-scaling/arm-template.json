@@ -100,17 +100,12 @@
             "name": "[variables('hostingPlanName')]",
             "location": "[resourceGroup().location]",
             "properties": {
-                "name": "[variables('hostingPlanName')]",
-                "reserved": false
+                "name": "[variables('hostingPlanName')]"
             },
             "sku": {
-                "name": "B1",
-                "tier": "Basic",
-                "size": "B1",
-                "family": "B",
-                "capacity": 1
-            },
-            "kind": "app"
+                "name": "EP1",
+                "Tier": "ElasticPremium"
+            }
         },
         {
             "apiVersion": "2018-11-01",
@@ -142,6 +137,7 @@
             "properties": {
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
                 "siteConfig": {
+                    "AlwaysOn": true,
                     "appSettings": [
                         {
                             "name": "Project",
