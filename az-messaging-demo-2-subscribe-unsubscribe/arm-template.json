@@ -98,14 +98,14 @@
         {
             "type": "Microsoft.Web/serverfarms",
             "apiVersion": "2016-09-01",
-            "name": "[parameters('hostingPlanName')]",
+            "name": "[variables('hostingPlanName')]",
             "location": "[resourceGroup().location]",
             "sku": {
                 "name": "EP1",
                 "Tier": "ElasticPremium"
             },
             "properties": {
-                "name": "[parameters('hostingPlanName')]"
+                "name": "[variables('hostingPlanName')]"
             }
         },
         {
