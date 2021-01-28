@@ -35,7 +35,7 @@ appInsights
     .setup(process.env['APPINSIGHTS_INSTRUMENTATIONKEY'])
     .setAutoCollectPerformance(false)
     .start();
-function default_1(context, warmupContext) {
+const warmupTrigger = function (context, warmupContext) {
     return __awaiter(this, void 0, void 0, function* () {
         const client = new service_bus_1.ServiceBusAdministrationClient(process.env['ServiceBusConnection']);
         try {
@@ -52,7 +52,6 @@ function default_1(context, warmupContext) {
         }
         context.log(`>>> Subscription recreated`);
     });
-}
-exports.default = default_1;
-;
+};
+exports.default = warmupTrigger;
 //# sourceMappingURL=index.js.map

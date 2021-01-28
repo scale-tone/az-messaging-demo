@@ -8,7 +8,7 @@ appInsights
     .setAutoCollectPerformance(false)
     .start();
 
-export default async function (context: Context, warmupContext: any): Promise<void> {
+const warmupTrigger: AzureFunction = async function (context: Context, warmupContext: any): Promise<void> {
 
     const client = new ServiceBusAdministrationClient(process.env['ServiceBusConnection']);
 
@@ -26,3 +26,5 @@ export default async function (context: Context, warmupContext: any): Promise<vo
 
     context.log(`>>> Subscription recreated`);
 };
+
+export default warmupTrigger;
