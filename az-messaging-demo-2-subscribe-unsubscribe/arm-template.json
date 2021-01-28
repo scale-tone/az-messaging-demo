@@ -101,12 +101,11 @@
             "name": "[parameters('hostingPlanName')]",
             "location": "[resourceGroup().location]",
             "sku": {
-                "name": "Y1",
-                "tier": "Dynamic"
+                "name": "EP1",
+                "Tier": "ElasticPremium"
             },
             "properties": {
-                "name": "[parameters('hostingPlanName')]",
-                "computeMode": "Dynamic"
+                "name": "[parameters('hostingPlanName')]"
             }
         },
         {
@@ -139,7 +138,6 @@
             "properties": {
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
                 "siteConfig": {
-                    "alwaysOn": true,
                     "appSettings": [
                         {
                             "name": "Project",
