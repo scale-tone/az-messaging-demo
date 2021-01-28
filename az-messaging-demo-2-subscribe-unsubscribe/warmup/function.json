@@ -6,5 +6,5 @@
             "name": "warmupContext"
         }
     ],
-    "scriptFile": "../dist/Warmup/index.js"
+    "scriptFile": "../dist/warmup/index.js"
 }
