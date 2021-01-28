@@ -1,7 +1,7 @@
 import { Context } from '@azure/functions'
 import { EventHubProducerClient } from '@azure/event-hubs';
 
-// AppInsights for sending custom events
+// AppInsights for sending custom metrics
 import * as appInsights from 'applicationinsights';
 
 import { NumOfEventsToSend } from '../shared';

@@ -1,5 +1,5 @@
 
-// Initializing AppInsights for sending custom events
+// Initializing AppInsights for sending custom metrics
 import * as appInsights from 'applicationinsights';
 appInsights
     .setup(process.env['APPINSIGHTS_INSTRUMENTATIONKEY'])

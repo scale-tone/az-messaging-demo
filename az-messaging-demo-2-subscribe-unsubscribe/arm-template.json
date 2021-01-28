@@ -15,7 +15,8 @@
         "serviceBusNamespaceName": "[concat(parameters('deploymentName'), '-sb-ns')]",
         "storageAccountName": "[concat(parameters('deploymentName'), 'st')]",
         "hostingPlanName": "[concat(parameters('deploymentName'), '-plan')]",
-        "functionAppName": "[concat(parameters('deploymentName'), '-sender-func')]",
+        "senderFunctionAppName": "[concat(parameters('deploymentName'), '-sender-func')]",
+        "receiverFunctionAppName": "[concat(parameters('deploymentName'), '-receiver-func')]",
         "appInsightsName": "[concat(parameters('deploymentName'), '-insights')]"
     },
     "resources": [
@@ -111,7 +112,7 @@
         {
             "apiVersion": "2018-11-01",
             "type": "Microsoft.Web/sites",
-            "name": "[variables('functionAppName')]",
+            "name": "[variables('senderFunctionAppName')]",
             "location": "[resourceGroup().location]",
             "kind": "functionapp",
             "dependsOn": [
@@ -127,7 +128,7 @@
                     "name": "web",
                     "type": "sourcecontrols",
                     "dependsOn": [
-                        "[resourceId('Microsoft.Web/sites/', variables('functionAppName'))]"
+                        "[resourceId('Microsoft.Web/sites/', variables('senderFunctionAppName'))]"
                     ],
                     "properties": {
                         "RepoUrl": "https://github.com/scale-tone/az-messaging-demo",
@@ -143,6 +144,79 @@
                         {
                             "name": "Project",
                             "value": "az-messaging-demo-2-subscribe-unsubscribe/event-sender-func"
+                        },
+                        {
+                            "name": "EventHubsConnection",
+                            "value": "[listkeys(resourceId('Microsoft.EventHub/namespaces/authorizationRules', variables('eventHubNamespaceName'), 'RootManageSharedAccessKey'), '2017-04-01').primaryConnectionString]"
+                        },
+                        {
+                            "name": "ServiceBusConnection",
+                            "value": "[listKeys(resourceId('Microsoft.ServiceBus/namespaces/AuthorizationRules', variables('serviceBusNamespaceName'),'RootManageSharedAccessKey'),'2015-08-01').primaryConnectionString]"
+                        },
+                        {
+                            "name": "AzureWebJobsStorage",
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2019-06-01').keys[0].value,';EndpointSuffix=','core.windows.net')]"
+                        },
+                        {
+                            "name": "FUNCTIONS_EXTENSION_VERSION",
+                            "value": "~3"
+                        },
+                        {
+                            "name": "FUNCTIONS_WORKER_RUNTIME",
+                            "value": "node"
+                        },
+                        {
+                            "name": "WEBSITE_NODE_DEFAULT_VERSION",
+                            "value": "~12"
+                        },
+                        {
+                            "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                            "value": "[reference(concat('microsoft.insights/components/', variables('appInsightsName')), '2015-05-01').InstrumentationKey]"
+                        },
+                        {
+                            "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
+                            "value": "[reference(concat('microsoft.insights/components/', variables('appInsightsName')), '2015-05-01').ConnectionString]"
+                        }
+                    ]
+                }
+            }
+        },
+
+        {
+            "apiVersion": "2018-11-01",
+            "type": "Microsoft.Web/sites",
+            "name": "[variables('receiverFunctionAppName')]",
+            "location": "[resourceGroup().location]",
+            "kind": "functionapp",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
+                "[resourceId('microsoft.insights/components', variables('appInsightsName'))]",
+                "[resourceId('Microsoft.EventHub/namespaces', variables('eventHubNamespaceName'))]",
+                "[resourceId('Microsoft.ServiceBus/namespaces', variables('serviceBusNamespaceName'))]"
+            ],
+            "resources": [
+                {
+                    "apiVersion": "2015-08-01",
+                    "name": "web",
+                    "type": "sourcecontrols",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Web/sites/', variables('receiverFunctionAppName'))]"
+                    ],
+                    "properties": {
+                        "RepoUrl": "https://github.com/scale-tone/az-messaging-demo",
+                        "branch": "main"
+                    }
+                }
+            ],
+            "properties": {
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
+                "siteConfig": {
+                    "alwaysOn": true,
+                    "appSettings": [
+                        {
+                            "name": "Project",
+                            "value": "az-messaging-demo-2-subscribe-unsubscribe/event-receiver-func"
                         },
                         {
                             "name": "EventHubsConnection",
