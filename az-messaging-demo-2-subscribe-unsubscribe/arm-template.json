@@ -210,7 +210,6 @@
             "properties": {
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
                 "siteConfig": {
-                    "alwaysOn": true,
                     "appSettings": [
                         {
                             "name": "Project",
