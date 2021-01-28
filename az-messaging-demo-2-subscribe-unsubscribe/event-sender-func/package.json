@@ -10,13 +10,11 @@
         "test": "echo \"No tests yet...\""
     },
     "dependencies": {
-        "@azure/service-bus": "^7.0.0"
-    },
-    "devDependencies": {
         "@azure/event-hubs": "^5.3.1",
         "@azure/service-bus": "^7.0.0",
         "applicationinsights": "^1.8.8",
         "@azure/functions": "^1.2.2",
         "typescript": "^3.3.3"
-    }
+    },
+    "devDependencies": {}
 }
