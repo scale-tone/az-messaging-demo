@@ -28,29 +28,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const service_bus_1 = require("@azure/service-bus");
 // AppInsights for sending custom metrics
 const appInsights = __importStar(require("applicationinsights"));
 function default_1(context, msg) {
     return __awaiter(this, void 0, void 0, function* () {
-        const eventAgeInSec = Math.floor((new Date().getTime() - new Date(msg).getTime()) / 1000);
-        appInsights.defaultClient.trackMetric({ name: 'ServiceBusEventAgeInSec', value: eventAgeInSec });
+        context.log(`ServiceBusHandler got green event: ${JSON.stringify(msg)}`);
+        // emulating a 100 ms processing delay
+        yield new Promise(resolve => setTimeout(resolve, 100));
+        const eventAgeInSec = Math.floor((new Date().getTime() - new Date(msg.timestamp).getTime()) / 1000);
+        appInsights.defaultClient.trackMetric({ name: 'ServiceBusGreenEventAgeInSec', value: eventAgeInSec });
     });
 }
 exports.default = default_1;
 ;
-// Re-subscribes to the Service Bus Topic at every startup
-function RecreateSubscriptionAtStartup() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const client = new service_bus_1.ServiceBusAdministrationClient(process.env['ServiceBusConnection']);
-        try {
-            yield client.deleteSubscription('input-topic', 'input-subscription');
-            yield client.createSubscription('input-topic', 'input-subscription');
-        }
-        catch (err) {
-            console.log(err);
-        }
-    });
-}
-// RecreateSubscriptionAtStartup();
 //# sourceMappingURL=index.js.map

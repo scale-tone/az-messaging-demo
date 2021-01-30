@@ -1,5 +1,5 @@
 {
-    "name": "azure-messaging-demo-2-subscribe-unsubscribe-event-sender-func",
+    "name": "azure-messaging-demo-2-event-filtering",
     "version": "1.0.0",
     "description": "",
     "scripts": {

@@ -28,30 +28,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const service_bus_1 = require("@azure/service-bus");
-// Initializing AppInsights for sending custom metrics
+// AppInsights for sending custom metrics
 const appInsights = __importStar(require("applicationinsights"));
-appInsights
-    .setup(process.env['APPINSIGHTS_INSTRUMENTATIONKEY'])
-    .setAutoCollectPerformance(false)
-    .start();
-const warmupTrigger = function (context, warmupContext) {
+// Actual processing function
+function default_1(context, eventHubMessages) {
     return __awaiter(this, void 0, void 0, function* () {
-        const client = new service_bus_1.ServiceBusAdministrationClient(process.env['ServiceBusConnection']);
-        try {
-            yield client.deleteSubscription('input-topic', 'input-subscription');
+        for (var msg of eventHubMessages) {
+            appInsights.defaultClient.trackMetric({ name: 'EventHubEventProcessed', value: 1 });
+            // Filtering out events other than green
+            if (msg.eventType !== 'green') {
+                continue;
+            }
+            context.log(`EventHubHandler got green event: ${JSON.stringify(msg)}`);
+            // emulating a 100 ms processing delay
+            yield new Promise(resolve => setTimeout(resolve, 100));
+            const eventAgeInSec = Math.floor((new Date().getTime() - new Date(msg.timestamp).getTime()) / 1000);
+            appInsights.defaultClient.trackMetric({ name: 'EventHubGreenEventAgeInSec', value: eventAgeInSec });
         }
-        catch (err) {
-            context.log(`>>> Failed to delete subscription: ${err}`);
-        }
-        try {
-            yield client.createSubscription('input-topic', 'input-subscription');
-        }
-        catch (err) {
-            context.log(`>>> Failed to create subscription: ${err}`);
-        }
-        context.log(`>>> Subscription recreated`);
     });
-};
-exports.default = warmupTrigger;
+}
+exports.default = default_1;
+;
 //# sourceMappingURL=index.js.map
