@@ -1,6 +1,6 @@
 import { Context } from "@azure/functions"
 
-import { ServiceBusClient, ServiceBusMessage } from '@azure/service-bus';
+import { ServiceBusClient } from '@azure/service-bus';
 import { EventHubProducerClient } from '@azure/event-hubs';
 
 // Initializing AppInsights for sending custom metrics
