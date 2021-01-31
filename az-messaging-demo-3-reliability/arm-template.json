@@ -4,7 +4,7 @@
     "parameters": {
         "deploymentName": {
             "type": "string",
-            "defaultValue": "[concat('azmsg2', uniqueString(resourceGroup().id))]",
+            "defaultValue": "[concat('azmsg3', uniqueString(resourceGroup().id))]",
             "metadata": {
                 "description": "A unique random base name for this demo setup"
             }

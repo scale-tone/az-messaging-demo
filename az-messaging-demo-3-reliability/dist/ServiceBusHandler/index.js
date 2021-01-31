@@ -36,7 +36,7 @@ function default_1(context, msg) {
         context.log(`ServiceBusHandler got event: ${JSON.stringify(msg)}`);
         // Failing intermittently
         if (Math.floor((Math.random() * shared_1.ProbabilityOfFailure)) === 0) {
-            throw 'ServiceBusHandler got an intermittent failure';
+            //        throw 'ServiceBusHandler got an intermittent failure';
         }
         const timeSinceStartupInSec = Math.floor((new Date(msg).getTime() - shared_1.StartupTime.getTime()) / 1000);
         appInsights.defaultClient.trackMetric({ name: 'ServiceBusTimeSinceStartup', value: timeSinceStartupInSec });
