@@ -3,20 +3,7 @@ import { Context } from "@azure/functions"
 import { ServiceBusClient } from '@azure/service-bus';
 import { EventHubProducerClient } from '@azure/event-hubs';
 
-// Initializing AppInsights for sending custom metrics
-import * as appInsights from 'applicationinsights';
-appInsights
-    .setup(process.env['APPINSIGHTS_INSTRUMENTATIONKEY'])
-    .setAutoCollectPerformance(false)
-    .start();
-
 const NumOfEventsToSend = 1000;
-
-// Noting the startup moment of time
-export const StartupTime = new Date();
-
-// How frequently our handlers are going to fail
-export const ProbabilityOfFailure = 1000;
 
 // Sends a bunch of events every second
 export default async function (context: Context): Promise<void> {

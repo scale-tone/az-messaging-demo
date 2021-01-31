@@ -3,7 +3,7 @@ import { Context } from "@azure/functions"
 // AppInsights for sending custom metrics
 import * as appInsights from 'applicationinsights';
 
-import { StartupTime, ProbabilityOfFailure } from '../TimerTriggeredFunc';
+import { StartupTime, ProbabilityOfFailure } from '../shared';
 
 export default async function (context: Context, msg: any): Promise<void> {
 
