@@ -30,19 +30,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 // AppInsights for sending custom metrics
 const appInsights = __importStar(require("applicationinsights"));
+const TimerTriggeredFunc_1 = require("../TimerTriggeredFunc");
 // Actual processing function
 function default_1(context, eventHubMessages) {
     return __awaiter(this, void 0, void 0, function* () {
         for (var msg of eventHubMessages) {
-            // Filtering out events other than green
-            if (msg.eventType !== 'green') {
-                continue;
+            context.log(`EventHubHandler got event: ${JSON.stringify(msg)}`);
+            // Failing intermittently
+            if (Math.floor((Math.random() * TimerTriggeredFunc_1.ProbabilityOfFailure)) === 0) {
+                throw 'EventHubHandler got an intermittent failure';
             }
-            context.log(`EventHubHandler got green event: ${JSON.stringify(msg)}`);
-            // emulating a 100 ms processing delay
-            yield new Promise(resolve => setTimeout(resolve, 100));
-            const eventAgeInSec = Math.floor((new Date().getTime() - new Date(msg.timestamp).getTime()) / 1000);
-            appInsights.defaultClient.trackMetric({ name: 'EventHubGreenEventAgeInSec', value: eventAgeInSec });
+            const timeSinceStartupInSec = Math.floor((new Date(msg).getTime() - TimerTriggeredFunc_1.StartupTime.getTime()) / 1000);
+            appInsights.defaultClient.trackMetric({ name: 'EventHubTimeSinceStartup', value: timeSinceStartupInSec });
         }
     });
 }

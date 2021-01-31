@@ -8,8 +8,6 @@ export default async function (context: Context, eventHubMessages: any[]): Promi
 
     for (var msg of eventHubMessages) {
 
-        appInsights.defaultClient.trackMetric({ name: 'EventHubEventProcessed', value: 1 });
-
         // Filtering out events other than green
         if (msg.eventType !== 'green') {
             continue;
