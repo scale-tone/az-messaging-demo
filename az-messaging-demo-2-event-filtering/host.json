@@ -3,7 +3,7 @@
     "extensions": {
         "eventHubs": {
             "eventProcessorOptions": {
-                "maxBatchSize": 100
+                "maxBatchSize": 64
             }
         }
     },

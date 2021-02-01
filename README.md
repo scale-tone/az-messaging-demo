@@ -1,0 +1,2 @@
+
+This is a set of code samples for [this blog post](https://scale-tone.github.io/2021/02/01/message-queueing-vs-stream-processing-in-azure), which is focused on comparing various architectural concepts of Message Queueing vs. Event Stream Processing. All samples are effectively Azure Functions written in TypeScript. You can instantly deploy them to your Azure Subscription with provided ARM templates.
