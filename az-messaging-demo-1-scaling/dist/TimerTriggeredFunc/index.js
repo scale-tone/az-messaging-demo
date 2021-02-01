@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const service_bus_1 = require("@azure/service-bus");
 const event_hubs_1 = require("@azure/event-hubs");
-const NumOfEventsToSend = 100;
+const shared_1 = require("../shared");
 // Sends a bunch of events every second
 function default_1(context) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -19,7 +19,7 @@ function default_1(context) {
             SendSomeEventsToEventHub(),
             SendSomeEventsToServiceBus()
         ]);
-        context.log(`${NumOfEventsToSend} events sent`);
+        context.log(`${shared_1.NumOfEventsToSend} events sent`);
     });
 }
 exports.default = default_1;
@@ -28,7 +28,7 @@ function SendSomeEventsToEventHub() {
     return __awaiter(this, void 0, void 0, function* () {
         const client = new event_hubs_1.EventHubProducerClient(process.env['EventHubsConnection'], 'input-hub');
         var batch = yield client.createBatch();
-        for (var i = 0; i < NumOfEventsToSend; i++) {
+        for (var i = 0; i < shared_1.NumOfEventsToSend; i++) {
             const body = new Date().toJSON();
             if (!batch.tryAdd({ body })) {
                 yield client.sendBatch(batch);
@@ -46,7 +46,7 @@ function SendSomeEventsToServiceBus() {
         const sender = client.createSender('input-queue');
         // Expecting all events to fit into one batch
         var batch = yield sender.createMessageBatch();
-        for (var i = 0; i < NumOfEventsToSend; i++) {
+        for (var i = 0; i < shared_1.NumOfEventsToSend; i++) {
             const body = new Date().toJSON();
             if (!batch.tryAddMessage({ body })) {
                 yield sender.sendMessages(batch);

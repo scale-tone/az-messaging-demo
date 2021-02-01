@@ -19,7 +19,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NumOfEventsToSend = void 0;
+exports.ProbabilityOfGreenEvent = exports.NumOfEventsToSend = void 0;
 // Initializing AppInsights for sending custom metrics
 const appInsights = __importStar(require("applicationinsights"));
 appInsights
@@ -27,4 +27,5 @@ appInsights
     .setAutoCollectPerformance(false)
     .start();
 exports.NumOfEventsToSend = 1000;
+exports.ProbabilityOfGreenEvent = 150;
 //# sourceMappingURL=shared.js.map

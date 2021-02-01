@@ -2,8 +2,7 @@ import { Context } from "@azure/functions"
 
 import { ServiceBusClient } from '@azure/service-bus';
 import { EventHubProducerClient } from '@azure/event-hubs';
-
-const NumOfEventsToSend = 100;
+import { NumOfEventsToSend } from '../shared';
 
 // Sends a bunch of events every second
 export default async function (context: Context): Promise<void> {

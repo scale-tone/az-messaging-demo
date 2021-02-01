@@ -2,16 +2,7 @@ import { Context } from "@azure/functions"
 
 import { ServiceBusClient } from '@azure/service-bus';
 import { EventHubProducerClient } from '@azure/event-hubs';
-
-// Initializing AppInsights for sending custom metrics
-import * as appInsights from 'applicationinsights';
-appInsights
-    .setup(process.env['APPINSIGHTS_INSTRUMENTATIONKEY'])
-    .setAutoCollectPerformance(false)
-    .start();
-
-const NumOfEventsToSend = 1000;
-const ProbabilityOfGreenEvent = 150;
+import { NumOfEventsToSend, ProbabilityOfGreenEvent } from '../shared';
 
 // Sends a bunch of events every second
 export default async function (context: Context): Promise<void> {

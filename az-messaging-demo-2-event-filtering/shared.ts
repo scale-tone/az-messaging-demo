@@ -1,4 +1,3 @@
-
 // Initializing AppInsights for sending custom metrics
 import * as appInsights from 'applicationinsights';
 appInsights
@@ -6,4 +5,5 @@ appInsights
     .setAutoCollectPerformance(false)
     .start();
 
-export const NumOfEventsToSend = 100;
+export const NumOfEventsToSend = 1000;
+export const ProbabilityOfGreenEvent = 150;
