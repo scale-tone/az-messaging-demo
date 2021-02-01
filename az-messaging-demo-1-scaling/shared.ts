@@ -5,5 +5,3 @@ appInsights
     .setup(process.env['APPINSIGHTS_INSTRUMENTATIONKEY'])
     .setAutoCollectPerformance(false)
     .start();
-
-export const NumOfEventsToSend = 100000;

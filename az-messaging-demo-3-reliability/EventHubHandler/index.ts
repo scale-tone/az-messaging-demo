@@ -14,7 +14,7 @@ export default async function (context: Context, eventHubMessages: any[]): Promi
 
         // Failing intermittently
         if (Math.floor((Math.random() * ProbabilityOfFailure)) === 0) {
-//            throw 'EventHubHandler got an intermittent failure';
+            throw 'EventHubHandler got an intermittent failure';
         }
 
         const timeSinceStartupInSec = Math.floor((new Date(msg).getTime() - StartupTime.getTime()) / 1000);

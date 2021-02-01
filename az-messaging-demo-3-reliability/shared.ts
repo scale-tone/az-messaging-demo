@@ -5,8 +5,8 @@ appInsights
     .setAutoCollectPerformance(false)
     .start();
 
-// Noting the startup moment of time
+// Noting the moment of time when application starts
 export const StartupTime = new Date();
 
 // How frequently our handlers are going to fail
-export const ProbabilityOfFailure = 1000;
+export const ProbabilityOfFailure = 200;

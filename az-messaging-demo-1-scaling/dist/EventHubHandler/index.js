@@ -28,10 +28,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const event_hubs_1 = require("@azure/event-hubs");
-// AppInsights for sending custom events
+// AppInsights for sending custom metrics
 const appInsights = __importStar(require("applicationinsights"));
-const shared_1 = require("../shared");
 // Actual processing function
 function default_1(context, eventHubMessages) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -45,22 +43,4 @@ function default_1(context, eventHubMessages) {
 }
 exports.default = default_1;
 ;
-// Sending a bunch of events at every Function startup
-function SendSomeEventsAtStartup(numOfEvents) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const client = new event_hubs_1.EventHubProducerClient(process.env['EventHubsConnection'], 'input-hub');
-        var batch = yield client.createBatch();
-        for (var i = 0; i < numOfEvents; i++) {
-            const body = `${new Date().toJSON()}: event${i}`;
-            if (!batch.tryAdd({ body })) {
-                yield client.sendBatch(batch);
-                batch = yield client.createBatch();
-                batch.tryAdd({ body });
-            }
-        }
-        yield client.sendBatch(batch);
-        yield client.close();
-    });
-}
-SendSomeEventsAtStartup(shared_1.NumOfEventsToSend);
 //# sourceMappingURL=index.js.map

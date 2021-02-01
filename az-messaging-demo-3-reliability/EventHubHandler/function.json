@@ -1,14 +1,19 @@
 {
-  "bindings": [
-    {
-      "type": "eventHubTrigger",
-      "name": "eventHubMessages",
-      "direction": "in",
-      "eventHubName": "input-hub",
-      "connection": "EventHubsConnection",
-      "cardinality": "many",
-      "consumerGroup": "$Default"
-    }
-  ],
-  "scriptFile": "../dist/EventHubHandler/index.js"
+    "bindings": [
+        {
+            "type": "eventHubTrigger",
+            "name": "eventHubMessages",
+            "direction": "in",
+            "eventHubName": "input-hub",
+            "connection": "EventHubsConnection",
+            "cardinality": "many",
+            "consumerGroup": "$Default"
+        }
+    ],
+    "retry": {
+        "strategy": "fixedDelay",
+        "maxRetryCount": 10,
+        "delayInterval": "00:00:01"
+    },
+    "scriptFile": "../dist/EventHubHandler/index.js"
 }

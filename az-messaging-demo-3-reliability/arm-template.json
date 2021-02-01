@@ -76,7 +76,7 @@
             "name": "[variables('serviceBusNamespaceName')]",
             "location": "[resourceGroup().location]",
             "sku": {
-                "name": "Standard"
+                "name": "Basic"
             },
             "properties": {},
             "resources": [

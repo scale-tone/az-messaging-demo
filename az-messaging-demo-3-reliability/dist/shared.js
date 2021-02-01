@@ -26,8 +26,8 @@ appInsights
     .setup(process.env['APPINSIGHTS_INSTRUMENTATIONKEY'])
     .setAutoCollectPerformance(false)
     .start();
-// Noting the startup moment of time
+// Noting the moment of time when application starts
 exports.StartupTime = new Date();
 // How frequently our handlers are going to fail
-exports.ProbabilityOfFailure = 1000;
+exports.ProbabilityOfFailure = 200;
 //# sourceMappingURL=shared.js.map

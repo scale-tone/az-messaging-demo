@@ -19,12 +19,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NumOfEventsToSend = void 0;
-// Initializing AppInsights for sending custom events
+// Initializing AppInsights for sending custom metrics
 const appInsights = __importStar(require("applicationinsights"));
 appInsights
     .setup(process.env['APPINSIGHTS_INSTRUMENTATIONKEY'])
     .setAutoCollectPerformance(false)
     .start();
-exports.NumOfEventsToSend = 100000;
 //# sourceMappingURL=shared.js.map

@@ -28,10 +28,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const service_bus_1 = require("@azure/service-bus");
-// AppInsights for sending custom events
+// AppInsights for sending custom metrics
 const appInsights = __importStar(require("applicationinsights"));
-const shared_1 = require("../shared");
 // Actual processing function
 function default_1(context, message) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -43,25 +41,4 @@ function default_1(context, message) {
 }
 exports.default = default_1;
 ;
-// Sending a bunch of events at every Function startup
-function SendSomeEventsAtStartup(numOfEvents) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const client = new service_bus_1.ServiceBusClient(process.env['ServiceBusConnection']);
-        const sender = client.createSender('input-queue');
-        // Expecting all events to fit into one batch
-        var batch = yield sender.createMessageBatch();
-        for (var i = 0; i < numOfEvents; i++) {
-            const body = `${new Date().toJSON()}: event${i}`;
-            if (!batch.tryAddMessage({ body })) {
-                yield sender.sendMessages(batch);
-                batch = yield sender.createMessageBatch();
-                batch.tryAddMessage({ body });
-            }
-        }
-        yield sender.sendMessages(batch);
-        yield sender.close();
-        yield client.close();
-    });
-}
-SendSomeEventsAtStartup(shared_1.NumOfEventsToSend);
 //# sourceMappingURL=index.js.map
