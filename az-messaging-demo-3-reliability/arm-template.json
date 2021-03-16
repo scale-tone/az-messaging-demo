@@ -130,7 +130,8 @@
                     ],
                     "properties": {
                         "RepoUrl": "https://github.com/scale-tone/az-messaging-demo",
-                        "branch": "main"
+                        "branch": "main",
+                        "IsManualIntegration": true
                     }
                 }
             ],
